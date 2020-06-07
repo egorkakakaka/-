@@ -1,58 +1,55 @@
-// Лабораторная работа по теме Массивы 
-// Выполнил Параонов Егор Сергеевич ИВТ13-БО
+// Лабараторная работа по графам
+// Работу выполнил Парамонов Егор Сергеевич ИВТ13-БО
+// На вход поступает смежная матрица
 #include <stdio.h>
 #include <stdlib.h>
-void QuickSort(int* num, int lef, int rig)
+int put = 0; // предыдущя вершина
+int start = 0; // начальная вершина вершина
+
+
+int proverka(int *a, int str, int S)
 {
-	int p; // первый элемент
-	int l = lef; // левая граница
-	int r = rig; // правая граница
-	p = num[lef]; // присваиваем первый элемент
-	while (lef < rig)
+
+	for (int i = 0; i < S; i++) // работаем в цикле только с столбиками, а строки меняем до этой проверки
 	{
-		while ((num[rig] >= p) && (lef < rig))
+		if (str != start && put != start && (i == start && (a + str * S + i)))
+			return 1;
+		if (*(a + str * S + i) && i != put)
 		{
-			rig--; // сдвигаем пока r больше p
-		}
-		if (lef != rig) // если границы не равны
-		{
-			num[lef] = num[rig]; // r ставим вместо 
-			lef++; // сдвигаем l вправо
-		}
-		while ((num[lef] <= p) && (lef < rig))
-		{
-			lef++; // сдвигаем l
-		}
-		if (lef != rig) // если границы не равны
-		{
-			num[rig] = num[lef]; // снова меняем местами
-			rig--; // сдвигаем r
+			put = str;
+			if (proverka(a, i, S))
+				return 1;
 		}
 	}
-	num[lef] = p; // возвращаем l 
-	p = lef;
-	lef = l;
-	rig = r;
-	if (lef < p) // рекурсия для левой части
-		QuickSort(num, lef, p - 1);
-	if (rig > p) // рекурсия для правой части
-		QuickSort(num, p + 1, rig);
+
+	return 0;
 }
 int main()
 {
-	int i, S;
-	int *a;
-	printf("How many numbers you wont?");
+	int i, j, S;
+	int* a;
+	printf("How many vertices you have in your graph?");
 	printf("\n");
-	scanf_s("%d", &S); // количество символов в массиве
-	a = malloc(sizeof(int)*S); // выделяем память
-	printf("Enter %d numbers", S);
+	scanf_s("%d", &S); // количество вершин графа
+	a = malloc(sizeof(int) * S * S); // выделяем память
+	printf("Enter the adjacency table.");
 	printf("\n");
-	for (i = 0; i < S; i++)
-		scanf_s("%d", &a[i]); // ввод
-	QuickSort(a, 0, S - 1); // сортировка
-	for ( i = 0; i < S; i++) // вывод
-		printf("%4d ", a[i]);
+	for (i = 0; i < S; i++) // ввод смежной матрицы
+		for (j = 0; j < S; j++)
+			scanf_s("%d", (a + i * S + j));
+	proverka(a, 0, S); // запускаем рекурсивную функцию
+	int result = 0; // если вернется 1 то значит петля есть если 0 то петли нет
+	i = 0;
+	while (!result && i < S) // меняем строку
+	{
+		result = proverka(a, i, S);
+		i++;
+	}
+	if (result)
+		printf("Yes");
+	else
+		printf("No");
+
 	free(a);
 	return 0;
 }
