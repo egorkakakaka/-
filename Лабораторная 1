@@ -42,7 +42,11 @@ int main()
 	printf("\n");
 	scanf_s("%d", &s); // количество символов в массиве
 	a = malloc(sizeof(int)*S); // выделяем память
-	if(*a
+	if(a==NULL)
+	{
+		printf("Error memmory");
+		return 0;
+	}
 	printf("Enter %d numbers", s);
 	printf("\n");
 	for (i = 0; i < s; i++)
