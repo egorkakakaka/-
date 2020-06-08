@@ -2,6 +2,18 @@
 // Выполнил Параонов Егор Сергеевич ИВТ13-БО
 #include <stdio.h>
 #include <stdlib.h>
+
+int Proverka(int *a, int n)
+{
+	int i=0;
+	for(i=0;i<n;i++)
+	{
+		if(a[i] != 1 || a[i] != 0)
+			return 0;
+	}
+	return 1;
+}
+
 void QuickSort(int* num, int left, int right)
 {
 	int p; // первый элемент
@@ -36,7 +48,7 @@ void QuickSort(int* num, int left, int right)
 }
 int main()
 {
-	int i, s;
+	int i, s, p;
 	int *a=NULL;
 	printf("How many numbers you wont?");
 	printf("\n");
@@ -45,6 +57,12 @@ int main()
 	if(a==NULL)
 	{
 		printf("Error memmory");
+		return 0;
+	}
+	p=Proverka(a, s);
+	if(p==0)
+	{
+		printf("(Error)Need numbers, 0 or 1");
 		return 0;
 	}
 	printf("Enter %d numbers", s);
