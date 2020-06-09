@@ -1,0 +1,65 @@
+// главный файл
+
+
+// Лабараторная работа по графам
+// Работу выполнил Парамонов Егор Сергеевич ИВТ13-БО
+// На вход поступает матрица сежности, программа проверяет есть ли в данном графе циклы или их нет
+#include <stdio.h>
+#include <stdlib.h>
+#include "proverka.h"
+
+int main()
+{
+	int i, j, s;
+	int* a;
+	printf("How many vertices you have in your graph?");
+	printf("\n");
+	scanf_s("%d", &s); // количество вершин графа
+	a = malloc(sizeof(int) * s * s); // выделяем память
+	printf("Enter the adjacency table.");
+	printf("\n");
+	int start = 0;
+	for (i = 0; i < s; i++) // ввод смежной матрицы
+		for (j = 0; j < s; j++)
+			scanf_s("%d", (a + i * s + j));
+	int result = proverka(a, 0, s, 0, 0); // если вернется 1 то значит петля есть если 0 то петли нет
+	if (result)
+		printf("Yes");
+	else
+		printf("No");
+
+	free(a);
+	return 0;
+}
+
+
+// заголовачный файл проверки
+
+
+#pragma once
+int proverka(int* a, int str, int s, int put, int start);
+
+
+// с файл проверки
+
+
+#include "proverka.h"
+int proverka(int* a, int str, int s, int put, int start)
+{
+
+	for (int i = 0; i < s; i++) // меняем столбцы
+	{
+		// если текущая вершина не начальная, предыдущая першина не равна стартовой, текущий столбец равен начальному и стоит единица
+		if (str != start && put != start && (i == start && *(a + str * s + i)))
+			return 1;
+		// если в матрице единиться а столбец не равен исходному, меняем строку и вызываем на проверку данную вершину
+		if (*(a + str * s + i) && i != put)
+		{
+			put = str; // присваеваем прошлую вершину и вызываем функцию с новой вершиной
+			if (proverka(a, i, s, put, 0))
+				return 1;
+		}
+	}
+
+	return 0;
+}
