@@ -11,14 +11,14 @@ void QuickSort(int* num, int left, int right)
 	p = num[left]; // присваиваем первый элемент
 	while (left < right)
 	{
-		while ((num[right] >= p) && (left < right))
+		while (num[right] >= p && left < right)
 			right--; // сдвигаем пока r больше p
 		if (left != right) // если границы не равны
 		{
 			num[left] = num[right]; // r ставим вместо 
 			left++; // сдвигаем l вправо
 		}
-		while ((num[left] <= p) && (left < rig))
+		while (num[left] <= p && left < right)
 			left++; // сдвигаем l
 		if (left != right) // если границы не равны
 		{
@@ -37,24 +37,34 @@ void QuickSort(int* num, int left, int right)
 }
 int main()
 {
-	int i, s;
-	int *a=NULL;
+	int i, arr_size;
+	int* arr = NULL;
 	printf("How many numbers you wont?");
 	printf("\n");
-	scanf_s("%d", &s); // количество символов в массиве
-	a = malloc(sizeof(int)*S); // выделяем память
-	if(a==NULL)
+	// количество символов в массиве
+	if (scanf_s("%d", &arr_size) != 1)
+	{
+		printf("Error symbol");
+		return 0;
+	}
+	arr = malloc(sizeof(int) * arr_size); // выделяем память
+	if (arr == NULL)
 	{
 		printf("Error memmory");
 		return 0;
 	}
-	printf("Enter %d numbers", s);
+	printf("Enter %d numbers", arr_size);
 	printf("\n");
-	for (i = 0; i < s; i++)
-		scanf_s("%d", &a[i]); // ввод
-	QuickSort(a, 0, s - 1); // сортировка
-	for ( i = 0; i < s; i++) // вывод
-		printf("%4d ", a[i]);
-	free(a);
+	for (i = 0; i < arr_size; i++)
+		if(scanf_s("%d", &arr[i])!=1)
+		{
+			printf("Error symbol");
+			return 0;
+		}
+	// сортировка
+	QuickSort(arr, 0, arr_size - 1);
+	for (i = 0; i < arr_size; i++) 
+		printf("%4d ", arr[i]);
+	free(arr);
 	return 0;
 }
