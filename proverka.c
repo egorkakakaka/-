@@ -1,17 +1,18 @@
 #include "proverka.h"
-int proverka(int* a, int str, int s, int put, int start)
+int proverka(int* arr, int current, int graph_size, int last, int start)
 {
-
-	for (int i = 0; i < s; i++) // меняем столбцы
+    // меняем столбцы
+	for (int i = 0; i < graph_size; i++) 
 	{
 		// если текущая вершина не начальная, предыдущая першина не равна стартовой, текущий столбец равен начальному и стоит единица
-		if (str != start && put != start && (i == start && *(a + str * s + i)))
+		if (current != start && last != start && (i == start && *(arr + current * graph_size + i)))
 			return 1;
 		// если в матрице единиться а столбец не равен исходному, меняем строку и вызываем на проверку данную вершину
-		if (*(a + str * s + i) && i != put)
+		if (*(arr + current * graph_size + i) && i != last)
 		{
-			put = str; // присваеваем прошлую вершину и вызываем функцию с новой вершиной
-			if (proverka(a, i, s, put, 0))
+			// присваеваем прошлую вершину и вызываем функцию с новой вершиной
+			last = current; 
+			if (proverka(arr, i, graph_size, last, 0))
 				return 1;
 		}
 	}
