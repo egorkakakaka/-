@@ -1,2 +1,2 @@
 #pragma once
-int proverka(int* a, int str, int s, int put, int start);
+int proverka(int* arr, int current, int graph_size, int last, int start);
