@@ -1,1 +1,56 @@
+// Лабораторная работа по теме Стэк и Очередь
+// Выполнил Параонов Егор Сергеевич ИВТ13-БО
+#include <stdio.h>
+#include <stdlib.h>
+#define STACK_MAX_SIZE 40
 
+typedef struct Stack 
+{
+	char data[STACK_MAX_SIZE];
+	size_t size;
+} Stk;
+
+void push(Stk *stack, char symbol, int arr_size) 
+{
+	if (stack->size >= arr_size)
+	{
+		printf("Error of nomber counts");
+		exit(0);
+	}
+	stack->data[stack->size] = symbol;
+	stack->size++;
+}
+
+int take (Stk *stack) 
+{
+	if (stack->size == 0) 
+	{
+		printf("Error of nomber counts");
+		exit(0);
+	}
+	stack->size--;
+	return stack->data[stack->size];
+}
+
+int main()
+{
+	int i, arr_size;
+	char *arr = NULL;
+	printf("How many symbols you wont?");
+	printf("\n");
+	scanf_s("%d", &arr_size); // количество символов в массиве
+	arr = malloc(sizeof(int) * arr_size); // выделяем память
+	if (arr == NULL)
+	{
+		printf("Error memmory");
+		return 0;
+	}
+	printf("Enter %d numbers", arr_size);
+	printf("\n");
+	for (i = 0; i < arr_size; i++)
+		scanf_s("%c", &arr[i]); // ввод
+	for (i = 0; i < arr_size; i++) // вывод
+		printf("%4d ", arr[i]);
+	free(arr);
+	return 0;
+}
