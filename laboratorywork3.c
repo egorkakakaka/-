@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #define STACK_MAX_SIZE 40
 
-typedef struct Stack 
+typedef struct Stack
 {
 	char data[STACK_MAX_SIZE];
 	int curr;
@@ -15,7 +15,7 @@ void start(Stk* stack)
 	stack->curr = 0;
 }
 
-void push(Stk *stack, char symbol, int arr_size) 
+void push(Stk* stack, char symbol, int arr_size)
 {
 	if (stack->curr >= arr_size)
 	{
@@ -26,7 +26,7 @@ void push(Stk *stack, char symbol, int arr_size)
 	stack->curr++;
 }
 
-int pop (Stk *stack) 
+int pop(Stk* stack)
 {
 	if (stack->curr == 0)
 	{
@@ -37,13 +37,21 @@ int pop (Stk *stack)
 	return stack->data[stack->curr];
 }
 
+int top(Stk* stack)
+{
+	if (stack->curr == 0)
+		return stack->data[stack->curr];
+	else
+		return stack->data[stack->curr-1];
+}
+
 int main()
 {
-	int i=0, arr_size, j=0;
+	int i = 0, arr_size, j = 0;
 	char arr[40];
 	char answer[40];
-	int check;
-	Stk *stack = NULL;
+	int check=0;
+	Stk* stack = NULL;
 	printf("How many symbols you wont?");
 	printf("\n");
 	// количество символов в массиве
@@ -62,10 +70,10 @@ int main()
 	}*/
 	printf("Enter %d symbols", arr_size);
 	printf("\n");
-	while(i < arr_size)
+	while (i < arr_size)
 	{
 		arr[i] = getchar();
-		if (arr[i] != ' '&& arr[i] != '\n')
+		if (arr[i] != ' ' && arr[i] != '\n')
 			i++;
 	}
 	start(stack);
@@ -76,7 +84,7 @@ int main()
 		else
 		{
 			printf("Error symbol");
-				return 1;
+			return 1;
 		}
 	}
 	if (check == 1)
@@ -88,7 +96,7 @@ int main()
 			answer[j] = arr[i];
 			j++;
 		}
-		if (arr[i] == '(')
+		else if (arr[i] == '(')
 		{
 			push(stack, arr[i], arr_size);
 			while (arr[i] != ')')
@@ -99,59 +107,76 @@ int main()
 					j++;
 					i++;
 				}
-				else if (arr[i] == '+' || arr[i] == '-')
+				else if ((arr[i] == '+' || arr[i] == '-') && (top(stack) == '*' || top(stack) == '/'))
+				{
+					while (top(stack) != '(')
+					{
+						answer[j] = top(stack);
+						stack->curr--;
+						j++;
+					}
+					push(stack, arr[i], arr_size);
+					i++;
+				}
+				else if ((arr[i] == '+' || arr[i] == '-') && (top(stack) != '*' || top(stack) != '/'))
 				{
 					push(stack, arr[i], arr_size);
 					i++;
 				}
-				else if ((arr[i] == '*' || arr[i] == '/') && (stack->data[stack->curr - 1] == '*' || stack->data[stack->curr - 1] == '/'))
+				else if ((arr[i] == '*' || arr[i] == '/') && (top(stack) == '*' || top(stack) == '/'))
 				{
 					answer[j] = pop(stack);
 					j++;
 				}
-				else if ((arr[i] == '*' || arr[i] == '/') && (stack->data[stack->curr - 1] != '*' && stack->data[stack->curr - 1] != '/'))
+				else if ((arr[i] == '*' || arr[i] == '/') && (top(stack) != '*' && top(stack) != '/'))
 				{
 					push(stack, arr[i], arr_size);
 					i++;
 				}
-				else if (arr[i] == ')')
-					arr[i] = ')';
 				else if (arr[i] == '(')
 					i++;
 			}
-			while (stack->data[stack->curr-1] != '(')
+			while (top(stack) != '(')
 			{
-				answer[j] = stack->data[stack->curr-1];
+				answer[j] = top(stack);
 				stack->curr--;
 				j++;
 			}
+			if (top(stack) == '(')
+					if (stack->curr != 0)
+						stack->curr--;
 		}
-		if ((arr[i] == '*' || arr[i] == '/') && (stack->data[stack->curr-1] == '*' || stack->data[stack->curr-1] == '/'))
+		else if ((arr[i] == '*' || arr[i] == '/') && (top(stack) == '*' || top(stack) == '/'))
 		{
 			answer[j] = pop(stack);
 			j++;
+			push(stack, arr[i], arr_size);
 		}
-		if ((arr[i] == '*' || arr[i] == '/') && (stack->data[stack->curr-1] != '*' && stack->data[stack->curr-1] != '/'))
+		else if ((arr[i] == '*' || arr[i] == '/') && (top(stack) != '*' && top(stack) != '/'))
 		{
 			push(stack, arr[i], arr_size);
-			
 		}
-		if(arr[i] == '+' || arr[i] == '-')
+		else if (arr[i] == '+' || arr[i] == '-')
 		{
 			push(stack, arr[i], arr_size);
-			
 		}
 	}
 	while (stack->curr != 0)
 	{
-		if (stack->data[stack->curr - 1] == '(')
-			stack->curr--;
-		answer[j] = pop(stack);
-		j++;
+		if (top(stack) == '(')
+			pop(stack);
+		else
+		{
+			answer[j] = pop(stack);
+			j++;
+		}
 	}
 	for (i = 0; i < arr_size; i++)
 	{
-		printf("%c", answer[i]);
+		if ( answer[i] == '*' || answer[i] == '/' || answer[i] == '+' || answer[i] == '-' || (answer[i] >= '0' && answer[i] <= '9'))
+		{
+			printf("%c", answer[i]);
+		}
 	}
 	/*free(arr);*/
 	free(stack);
