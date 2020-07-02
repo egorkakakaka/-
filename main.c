@@ -18,7 +18,7 @@ int main()
 	arr_size = input_size();
 	stack = malloc(sizeof(Stk));
 	memmory_check(stack);
-	input_str(stack, arr_size, arr);
+	input_str(arr_size, arr);
 	start(stack);
 	arr_check(arr, arr_size, stack);
 	func(stack, arr, arr_size, answer);
