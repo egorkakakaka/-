@@ -1,70 +1,194 @@
-#include "utl.h"
-#include "stk.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "stk.h"
+#include "utl.h"
+#include "func.h"
 
-// ввод размера строки
-int input_size()
+// если попалось число
+int number_func(Stk* stack, char* arr, int arr_size, char* answer, int* i, int* j)
 {
-	int arr_size = 0;
-	printf("How many symbols you wont?\n");
-	if (scanf_s("%d", &arr_size))
-		return arr_size;
-	else
-	{
-		printf("Error symbol, try again\n");
-		return input_size();
-	}
+	//добавляем число к ответу
+	answer[*j] = arr[*i];
+	//сдвигаем указатели на 1
+	(*j)++;
+	(*i)++;
+	return 1;
 }
 
-// ввод строки
-int input_str(Stk* stack, int arr_size, char* arr)
+// если попался умножить или делить
+int mult_div_func(Stk* stack, char* arr, int arr_size, char* answer, int* i, int* j, int b)
 {
-	int i = 0;
-	printf("Enter %d symbols\n", arr_size);
-	while (i < arr_size)
+	// если в вершине стэка лежит умножить или делить 
+	if (top(stack) == '*' || top(stack) == '/' || top(stack) == '^')
 	{
-		arr[i] = getchar();
-		if (arr[i] != ' ' && arr[i] != '\n')
-			i++;
-	}
-}
-
-// проверка выделенной памяти
-int memmory_check(Stk* stack)
-{
-	if (stack == NULL)
-	{
-		printf("Error memmory");
-		return 0;
-	}
-}
-
-// проверка введенной строки
-int arr_check(char* arr, int arr_size, Stk* stack)
-{
-	int i=0;
-	for (i = 0; i < arr_size; i++)
-	{
-		if (arr[i] == '(' || arr[i] == ')' || arr[i] == '*' || arr[i] == '/' || arr[i] == '+' || arr[i] == '-' || (arr[i] >= '0' && arr[i] <= '9')|| arr[i] == '^');
+		// если до этого в стэке есть скобка
+		if (b == 1)
+		{
+			while (top(stack) != '(')
+			{
+				answer[*j] = top(stack);
+				pop(stack);
+				(*j)++;
+			}
+		}
+		// если в стэке нет скобок
 		else
 		{
-			printf("Error symbol, try again");
-			return input_str(stack, arr_size, arr);
+			answer[*j] = pop(stack);
+			(*j)++;
 		}
+		// закидываем символ в стэк
+		push(stack, arr[*i], arr_size);
 	}
-	printf("All is ok\n");
+	// если в вершине стэка нет умножения или деления кидаем символ в стэк
+	else
+		push(stack, arr[*i], arr_size);
+	return (*i)++;
 }
 
-// вывод строки в обратной польской записи
-int output(char* answer, int arr_size)
+// если попался плюс или делить
+int plus_minus_func(Stk* stack, char* arr, int arr_size, char* answer, int* i, int* j, int b)
 {
-	int i = 0;
-	for (i = 0; i < arr_size; i++)
+	// если в вершине стэка умножение или деление или плюс или минус
+	if (top(stack) == '*' || top(stack) == '/' || top(stack) == '+'|| top(stack) == '-'|| top(stack) == '^')
 	{
-		if (answer[i] == '*' || answer[i] == '/' || answer[i] == '+' || answer[i] == '-' || (answer[i] >= '0' && answer[i] <= '9') || answer[i] == '^')
+		// если до этого в стэке есть скобка
+		if (b == 1)
 		{
-			printf("%c", answer[i]);
+			while (top(stack) != '(')
+			{
+				answer[*j] = top(stack);
+				pop(stack);
+				(*j)++;
+			}
+		}
+		// если в стэке нет скобок
+		else
+		{
+			while (stack->curr != 0)
+			{
+				answer[*j] = pop(stack);
+				(*j)++;
+			}
+		}
+		push(stack, arr[*i], arr_size);
+	}
+	else
+		push(stack, arr[*i], arr_size);
+	return (*i)++;
+}
+
+// если встретилось возведение
+int exponent_func(Stk* stack, char* arr, int arr_size, char* answer, int* i, int* j, int b)
+{
+	if (top(stack) == '^' )
+	{
+		// если до этого в стэке есть скобка
+		if (b == 1)
+		{
+			while (top(stack) != '(')
+			{
+				answer[*j] = top(stack);
+				pop(stack);
+				(*j)++;
+			}
+		}
+		// если в стэке нет скобок
+		else
+		{
+			while (stack->curr != 0)
+			{
+				answer[*j] = pop(stack);
+				(*j)++;
+			}
+		}
+		push(stack, arr[*i], arr_size);
+	}
+	else
+		push(stack, arr[*i], arr_size);
+	return (*i)++;
+} 
+
+// если попалась скобка
+int bracket_func(Stk* stack, char* arr, int arr_size, char* answer, int* i, int* j)
+{
+	// ложим скобку в стэк
+	push(stack, arr[*i], arr_size);
+	// меняем указатель на следующий знак
+	(*i)++;
+	// пока не встретиться закрывающая скобка делаем следующее
+	while (arr[*i] != ')')
+	{
+		// если встретилось число запускаем функцию
+		if (arr[*i] >= '0' && arr[*i] <= '9')
+			number_func(stack, arr, arr_size, answer, i, j);
+		// если встретился плюс или минус
+		else if (arr[*i] == '+' || arr[*i] == '-')
+			plus_minus_func(stack, arr, arr_size, answer, i, j, 1);
+		// если встретилось умножить или делить
+		else if (arr[*i] == '*' || arr[*i] == '/')
+			mult_div_func(stack, arr, arr_size, answer, i, j, 1);
+		// если встретилось возвести
+		else if (arr[*i] == '^')
+			exponent_func(stack, arr, arr_size, answer, i, j, 1);
+		// если встретилась снова открывающая скобка
+		else if (arr[*i] == '(')
+			bracket_func(stack, arr, arr_size, answer, i, j);
+	}
+	// когда нам встретилась закрывающая скобка, вынемаем все из стэка до открывающей
+	while (top(stack) != '(')
+	{
+		answer[*j] = pop(stack);
+		(*j)++;
+	}
+	if (top(stack) == '(')
+		if (stack->curr != 0)
+			pop(stack);
+	return (*i)++;
+}
+
+// вынемаем все из стэка кроме скобок
+int end_func(Stk* stack, char* answer, int* j)
+{
+	while (stack->curr != 0)
+	{
+		if (top(stack) == '(')
+			pop(stack);
+		else
+		{
+			answer[*j] = pop(stack);
+			(*j)++;
 		}
 	}
+}
+
+// главная функция
+int func(Stk* stack, char* arr, int arr_size, char* answer)
+{
+	int* i, *j;
+	i = malloc(sizeof(int));
+	j = malloc(sizeof(int));
+	*i = 0;
+	*j = 0;
+	while (*i < arr_size)
+	{
+		// если встретилось число запускаем функцию
+		if (arr[*i] >= '0' && arr[*i] <= '9')
+			number_func(stack, arr, arr_size, answer, i, j);
+		// если встретилась снова открывающая скобка
+		else if (arr[*i] == '(')
+			bracket_func(stack, arr, arr_size, answer, i, j);
+		// если встретилось умножить или делить
+		else if (arr[*i] == '*' || arr[*i] == '/')
+			mult_div_func(stack, arr, arr_size, answer, i, j, 0);
+		// если встретился плюс или минус
+		else if (arr[*i] == '+' || arr[*i] == '-')
+			plus_minus_func(stack, arr, arr_size, answer, i, j, 0);
+		else if (arr[*i] == '^')
+			exponent_func(stack, arr, arr_size, answer, i, j, 0);
+	}
+	end_func(stack, answer, j);
+	free(i);
+	free(j);
+	return *j;
 }
