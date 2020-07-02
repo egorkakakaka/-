@@ -21,8 +21,6 @@ int input_size()
 int input_str(int arr_size, char* arr)
 {
 	int i = 0, j = 0, k=0, num;
-	/*char* help_arr;
-	help_arr = malloc(sizeof(int) * arr_size);*/
 	printf("Enter %d symbols\n", arr_size);
 	while (i < arr_size)
 	{
@@ -30,29 +28,7 @@ int input_str(int arr_size, char* arr)
 		if (arr[i] != ' ' && arr[i] != '\n')
 			i++;
 	}
-	/*for (i = 0; i < arr_size; i++)
-	{
-		while (arr[i]>='0' && arr[i] <= '9')
-		{
-			help_arr[j] = arr[i];
-			j++;
-			i++;
-		}
-		if ((arr[i] <= '0' || arr[i] >= '9')&& atoi(help_arr)!=0)
-		{
-			if (arr[k] >= '0' && arr[k] <= '9' && (arr[k + 1] >= '0' && arr[k + 1] <= '9'))
-			{
-				num = atoi(help_arr);
-				arr[k] = num+'0';
-				k++;
-			}
-			while (arr[k] >= '0' && arr[k] <= '9')
-				k++;
-			k++;
-		}
-		help_arr[0] = "g";
-	}*/
-	/*free(help_arr);*/
+	return arr_check_1(arr, arr_size);
 }
 
 // проверка выделенной памяти
@@ -66,7 +42,7 @@ int memmory_check(Stk* stack)
 }
 
 // проверка введенной строки
-int arr_check(char* arr, int arr_size, Stk* stack)
+int arr_check_1(char* arr, int arr_size)
 {
 	int i=0;
 	for (i = 0; i < arr_size; i++)
@@ -75,26 +51,136 @@ int arr_check(char* arr, int arr_size, Stk* stack)
 		else
 		{
 			printf("Error symbol, try again");
-			return input_str(stack, arr_size, arr);
+			return input_str(arr_size, arr);
 		}
 	}
-	/*for (i = 0; i < arr_size; i++)
+	for (i = 0; i < arr_size; i++)
 	{
-		if(arr[i]=='s')
-		if (((i + 2) < arr_size) && arr[i] == 's' && arr[i + 1] == 'i' && arr[i + 2] == 'n');
-		else
+		if (arr[i] == 's')
 		{
-			printf("Error symbol, try again");
-			return input_str(stack, arr_size, arr);
+			if (((i + 2) < arr_size) && arr[i + 1] == 'i' && arr[i + 2] == 'n')
+			{
+				i += 2;
+			}
+			else
+			{
+				printf("Error symbol, try again\n");
+				return input_str(arr_size, arr);
+			}
+			
 		}
-		if (((i + 2) < arr_size) && arr[i] == 'c' && arr[i + 1] == 'o' && arr[i + 2] == 's');
-	}*/
+		if (arr[i] == 'c')
+		{
+			if (((i + 2) < arr_size) && arr[i + 1] == 'o' && arr[i + 2] == 's')
+			{
+				i += 2;
+			}
+			else
+			{
+				printf("Error symbol, try again\n");
+				return input_str(arr_size, arr);
+			}
+		}
+			
+	}
 	printf("All is ok\n");
+	return arr_check_2(arr, arr_size);
+}
+
+int arr_check_2(char* arr, int arr_size)
+{
+	int i = 0;
+	for (i = 0; i < arr_size; i++)
+	{
+		if (arr[i] == 's')
+		{
+			if (((i + 2) < arr_size) && arr[i + 1] == 'i' && arr[i + 2] == 'n')
+			{
+				i += 2;
+			}
+			else
+			{
+				printf("Error symbol, try again\n");
+				return input_str(arr_size, arr);
+			}
+
+		}
+		if (arr[i] == 'c')
+		{
+			if (((i + 2) < arr_size) && arr[i + 1] == 'o' && arr[i + 2] == 's')
+			{
+				i += 2;
+			}
+			else
+			{
+				printf("Error symbol, try again\n");
+				return input_str(arr_size, arr);
+			}
+		}
+
+	}
+	printf("I think so\n");
+	return arr_check_3(arr, arr_size);
+}
+
+int arr_check_3(char* arr, int arr_size)
+{
+	int i = 0,j = 0, a=0;
+	int* arr_help;
+	arr_help = malloc(sizeof(int) * arr_size);
+	for (i = 0; i < arr_size; i++)
+	{
+		if (arr[i] == '('|| arr[i] == ')')
+		{
+			arr_help[j] = arr[i];
+			j++;
+		}
+	}
+	if (j == 0)
+	{
+		return printf("Yes, all is ok\n");
+	}
+	for (i = 0; i < arr_size; i++)
+	{
+		if (a >= 0)
+		{
+			if (arr_help[i] == '(')
+				a++;
+			if (arr_help[i] == ')')
+				a--;
+		}
+		else 
+		{
+			printf("Error brackets count, try again\n");
+			return input_str(arr_size, arr);
+		}
+	}
+	if(a!=0)
+	{
+		printf("Error brackets count, try again\n");
+		return input_str(arr_size, arr);
+	}
+	printf("1 more check\n");
+	arr_check_4(arr, arr_size);
+}
+int arr_check_4(char* arr, int arr_size)
+{
+	int i = 0, j = 0, a = 0;
+	for (i = 0; i < arr_size; i++)
+	{
+		if ((arr[i] == '(' || arr[i] == ')' || arr[i] == '*' || arr[i] == '/' || arr[i] == '+' || arr[i] == '-' || arr[i] == '^') && (arr[i] <= '0' || arr[i] >= '9'))
+		{
+			printf("Oh sentence error, try again\n");
+			return input_str(arr_size, arr);
+		}
+	}
+	printf("Yes all is good ;)\n");
 }
 
 // вывод строки в обратной польской записи
 int output(char* answer, int arr_size)
 {
+	printf("Your answer - ");
 	int i = 0;
 	for (i = 0; i < arr_size; i++)
 	{
