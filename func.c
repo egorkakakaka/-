@@ -5,7 +5,7 @@
 #include "func.h"
 
 // если попалось число
-int number_func(Stk* stack, char* arr, int arr_size, char* answer, int* i, int* j)
+int number_func(char* arr, char* answer, int* i, int* j)
 {
 	//добавляем число к ответу
 	answer[*j] = arr[*i];
@@ -120,8 +120,8 @@ int bracket_func(Stk* stack, char* arr, int arr_size, char* answer, int* i, int*
 	while (arr[*i] != ')')
 	{
 		// если встретилось число запускаем функцию
-		if (arr[*i] >= '0' && arr[*i] <= '9')
-			number_func(stack, arr, arr_size, answer, i, j);
+		if ((arr[*i] >= '0' && arr[*i] <= '9') || (arr[*i] >= 'a' && arr[*i] <= 'z'))
+			number_func(arr, answer, i, j);
 		// если встретился плюс или минус
 		else if (arr[*i] == '+' || arr[*i] == '-')
 			plus_minus_func(stack, arr, arr_size, answer, i, j, 1);
@@ -173,8 +173,8 @@ int func(Stk* stack, char* arr, int arr_size, char* answer)
 	while (*i < arr_size)
 	{
 		// если встретилось число запускаем функцию
-		if (arr[*i] >= '0' && arr[*i] <= '9')
-			number_func(stack, arr, arr_size, answer, i, j);
+		if ((arr[*i] >= '0' && arr[*i] <= '9') || (arr[*i] >= 'a' && arr[*i] <= 'z'))
+			number_func(arr, answer, i, j);
 		// если встретилась снова открывающая скобка
 		else if (arr[*i] == '(')
 			bracket_func(stack, arr, arr_size, answer, i, j);
