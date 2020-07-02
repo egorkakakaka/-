@@ -46,7 +46,7 @@ int arr_check(char* arr, int arr_size, Stk* stack)
 	int i=0;
 	for (i = 0; i < arr_size; i++)
 	{
-		if (arr[i] == '(' || arr[i] == ')' || arr[i] == '*' || arr[i] == '/' || arr[i] == '+' || arr[i] == '-' || (arr[i] >= '0' && arr[i] <= '9'));
+		if (arr[i] == '(' || arr[i] == ')' || arr[i] == '*' || arr[i] == '/' || arr[i] == '+' || arr[i] == '-' || (arr[i] >= '0' && arr[i] <= '9')|| arr[i] == '^');
 		else
 		{
 			printf("Error symbol, try again");
@@ -62,7 +62,7 @@ int output(char* answer, int arr_size)
 	int i = 0;
 	for (i = 0; i < arr_size; i++)
 	{
-		if (answer[i] == '*' || answer[i] == '/' || answer[i] == '+' || answer[i] == '-' || (answer[i] >= '0' && answer[i] <= '9'))
+		if (answer[i] == '*' || answer[i] == '/' || answer[i] == '+' || answer[i] == '-' || (answer[i] >= '0' && answer[i] <= '9') || answer[i] == '^')
 		{
 			printf("%c", answer[i]);
 		}
