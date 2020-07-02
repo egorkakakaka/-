@@ -20,7 +20,6 @@ int main()
 	memmory_check(stack);
 	input_str(arr_size, arr);
 	start(stack);
-	arr_check(arr, arr_size, stack);
 	func(stack, arr, arr_size, answer);
 	output(answer, arr_size);
 	free(stack);
