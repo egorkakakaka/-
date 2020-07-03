@@ -163,12 +163,13 @@ int arr_check_3(char* arr, int arr_size)
 	printf("1 more check\n");
 	arr_check_4(arr, arr_size);
 }
+
 int arr_check_4(char* arr, int arr_size)
 {
 	int i = 0, j = 0, a = 0;
 	for (i = 0; i < arr_size; i++)
 	{
-		if ((arr[i] == '(' || arr[i] == ')' || arr[i] == '*' || arr[i] == '/' || arr[i] == '+' || arr[i] == '-' || arr[i] == '^') && (arr[i] <= '0' || arr[i] >= '9'))
+		if (( arr[i] == '*' || arr[i] == '/' || arr[i] == '+' || arr[i] == '-' || arr[i] == '^') && (arr[i-1] == '*' || arr[i-1] == '/' || arr[i-1] == '+' || arr[i-1] == '-' || arr[i-1] == '^'))
 		{
 			printf("Oh sentence error, try again\n");
 			return input_str(arr_size, arr);
