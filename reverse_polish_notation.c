@@ -50,7 +50,7 @@ int mult_div_func(Stk* stack, char* arr, int arr_size, char* answer, int* i, int
 int plus_minus_func(Stk* stack, char* arr, int arr_size, char* answer, int* i, int* j, int b)
 {
 	// если в вершине стэка умножение или деление или плюс или минус
-	if (top(stack) == '*' || top(stack) == '/' || top(stack) == '+'|| top(stack) == '-'|| top(stack) == '^')
+	if (top(stack) == '*' || top(stack) == '/' || top(stack) == '+' || top(stack) == '-' || top(stack) == '^')
 	{
 		// если до этого в стэке есть скобка
 		if (b == 1)
@@ -81,7 +81,7 @@ int plus_minus_func(Stk* stack, char* arr, int arr_size, char* answer, int* i, i
 // если встретилось возведение
 int exponent_func(Stk* stack, char* arr, int arr_size, char* answer, int* i, int* j, int b)
 {
-	if (top(stack) == '^' )
+	if (top(stack) == '^')
 	{
 		// если до этого в стэке есть скобка
 		if (b == 1)
@@ -107,7 +107,7 @@ int exponent_func(Stk* stack, char* arr, int arr_size, char* answer, int* i, int
 	else
 		push(stack, arr[*i], arr_size);
 	return (*i)++;
-} 
+}
 
 // если попалась скобка
 int bracket_func(Stk* stack, char* arr, int arr_size, char* answer, int* i, int* j)
@@ -165,7 +165,7 @@ int end_func(Stk* stack, char* answer, int* j)
 // главная функция
 int reverse_polish_notation(Stk* stack, char* arr, int arr_size, char* answer)
 {
-	int* i, *j;
+	int* i, * j;
 	i = malloc(sizeof(int));
 	j = malloc(sizeof(int));
 	*i = 0;
