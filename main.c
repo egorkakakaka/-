@@ -28,6 +28,7 @@ int main()
 	output(answer, arr_size);
 	free(arr);
 	free(answer);
+	free(stack->data);
 	free(stack);
 	return 0;
 }
