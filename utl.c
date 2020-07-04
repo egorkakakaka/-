@@ -7,7 +7,7 @@
 int input_size()
 {
 	int arr_size = 0;
-	printf("How many symbols you wont?\n");
+	printf("How many symbols you want?\n");
 	if (scanf_s("%d", &arr_size))
 		return arr_size;
 	else
