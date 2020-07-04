@@ -42,7 +42,7 @@ int memmory_check(Stk* stack)
 }
 
 // проверка введенной строки
-int arr_check_symbol(char* arr, int arr_size)
+int с(char* arr, int arr_size)
 {
 	int i=0;
 	for (i = 0; i < arr_size; i++)
@@ -84,7 +84,7 @@ int arr_check_symbol(char* arr, int arr_size)
 			
 	}
 	printf("All is ok\n");
-	return arr_check_2(arr, arr_size);
+	return arr_check_sin_cos(arr, arr_size);
 }
 
 int arr_check_sin_cos(char* arr, int arr_size)
@@ -120,7 +120,7 @@ int arr_check_sin_cos(char* arr, int arr_size)
 
 	}
 	printf("I think so\n");
-	return arr_check_3(arr, arr_size);
+	return arr_check_brackets(arr, arr_size);
 }
 
 int arr_check_brackets(char* arr, int arr_size)
@@ -161,7 +161,7 @@ int arr_check_brackets(char* arr, int arr_size)
 		return input_str(arr_size, arr);
 	}
 	printf("1 more check\n");
-	arr_check_4(arr, arr_size);
+	arr_check_sentence(arr, arr_size);
 }
 
 int arr_check_sentence(char* arr, int arr_size)
