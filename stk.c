@@ -2,9 +2,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "utl.h"
-void start(Stk* stack)
+
+void start(Stk* stack,int arr_size)
 {
 	stack->curr = 0;
+	stack->data = malloc(sizeof(char) * arr_size);
 }
 
 void push(Stk* stack, char symbol, int arr_size)
