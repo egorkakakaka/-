@@ -20,7 +20,7 @@ int input_size()
 // ввод строки
 int input_str(int arr_size, char* arr)
 {
-	int i = 0, j = 0, k=0, num;
+	int i = 0, j = 0, k = 0, num;
 	printf("Enter %d symbols\n", arr_size);
 	while (i < arr_size)
 	{
@@ -44,10 +44,10 @@ int memmory_check(Stk* stack)
 // проверка введенной строки
 int arr_check_symbol(char* arr, int arr_size)
 {
-	int i=0;
+	int i = 0;
 	for (i = 0; i < arr_size; i++)
 	{
-		if (arr[i] == '(' || arr[i] == ')' || arr[i] == '*' || arr[i] == '/' || arr[i] == '+' || arr[i] == '-' || (arr[i] >= '0' && arr[i] <= '9')|| arr[i] == '^' || (arr[i] >= 'a' && arr[i] <= 'z'));
+		if (arr[i] == '(' || arr[i] == ')' || arr[i] == '*' || arr[i] == '/' || arr[i] == '+' || arr[i] == '-' || (arr[i] >= '0' && arr[i] <= '9') || arr[i] == '^' || (arr[i] >= 'a' && arr[i] <= 'z'));
 		else
 		{
 			printf("Error symbol, try again");
@@ -67,7 +67,7 @@ int arr_check_symbol(char* arr, int arr_size)
 				printf("Error symbol, try again\n");
 				return input_str(arr_size, arr);
 			}
-			
+
 		}
 		if (arr[i] == 'c')
 		{
@@ -81,7 +81,7 @@ int arr_check_symbol(char* arr, int arr_size)
 				return input_str(arr_size, arr);
 			}
 		}
-			
+
 	}
 	printf("All is ok\n");
 	return arr_check_sin_cos(arr, arr_size);
@@ -125,12 +125,12 @@ int arr_check_sin_cos(char* arr, int arr_size)
 
 int arr_check_brackets(char* arr, int arr_size)
 {
-	int i = 0,j = 0, a=0;
+	int i = 0, j = 0, a = 0;
 	int* arr_help;
 	arr_help = malloc(sizeof(int) * arr_size);
 	for (i = 0; i < arr_size; i++)
 	{
-		if (arr[i] == '('|| arr[i] == ')')
+		if (arr[i] == '(' || arr[i] == ')')
 		{
 			arr_help[j] = arr[i];
 			j++;
@@ -149,13 +149,13 @@ int arr_check_brackets(char* arr, int arr_size)
 			if (arr_help[i] == ')')
 				a--;
 		}
-		else 
+		else
 		{
 			printf("Error brackets count, try again\n");
 			return input_str(arr_size, arr);
 		}
 	}
-	if(a!=0)
+	if (a != 0)
 	{
 		printf("Error brackets count, try again\n");
 		return input_str(arr_size, arr);
@@ -169,7 +169,7 @@ int arr_check_sentence(char* arr, int arr_size)
 	int i = 0, j = 0, a = 0;
 	for (i = 0; i < arr_size; i++)
 	{
-		if (( arr[i] == '*' || arr[i] == '/' || arr[i] == '+' || arr[i] == '-' || arr[i] == '^') && (arr[i-1] == '*' || arr[i-1] == '/' || arr[i-1] == '+' || arr[i-1] == '-' || arr[i-1] == '^'))
+		if ((arr[i] == '*' || arr[i] == '/' || arr[i] == '+' || arr[i] == '-' || arr[i] == '^') && (arr[i - 1] == '*' || arr[i - 1] == '/' || arr[i - 1] == '+' || arr[i - 1] == '-' || arr[i - 1] == '^'))
 		{
 			printf("Oh sentence error, try again\n");
 			return input_str(arr_size, arr);
@@ -185,7 +185,7 @@ int output(char* answer, int arr_size)
 	int i = 0;
 	for (i = 0; i < arr_size; i++)
 	{
-		if (answer[i] == '*' || answer[i] == '/' || answer[i] == '+' || answer[i] == '-' || (answer[i] >= '0' && answer[i] <= '9') || answer[i] == '^'|| (answer[i] >= 'a' && answer[i] <= 'z'))
+		if (answer[i] == '*' || answer[i] == '/' || answer[i] == '+' || answer[i] == '-' || (answer[i] >= '0' && answer[i] <= '9') || answer[i] == '^' || (answer[i] >= 'a' && answer[i] <= 'z'))
 		{
 			printf("%c", answer[i]);
 		}
