@@ -4,4 +4,4 @@
 #include "stk.h"
 #include "utl.h"
 
-int func(Stk* stack, char* arr, int arr_size,char* answer);
+int reverse_polish_notation(Stk* stack, char* arr, int arr_size,char* answer);
