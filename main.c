@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include "stk.h"
 #include "utl.h"
-#include "func.h"
+#include "reverse_polish_notation.h"
 
 int main()
 {
