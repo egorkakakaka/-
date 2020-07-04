@@ -28,7 +28,7 @@ int input_str(int arr_size, char* arr)
 		if (arr[i] != ' ' && arr[i] != '\n')
 			i++;
 	}
-	return arr_check_1(arr, arr_size);
+	return arr_check_symbol(arr, arr_size);
 }
 
 // проверка выделенной памяти
@@ -42,7 +42,7 @@ int memmory_check(Stk* stack)
 }
 
 // проверка введенной строки
-int с(char* arr, int arr_size)
+int arr_check_symbol(char* arr, int arr_size)
 {
 	int i=0;
 	for (i = 0; i < arr_size; i++)
