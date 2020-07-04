@@ -42,7 +42,7 @@ int memmory_check(Stk* stack)
 }
 
 // проверка введенной строки
-int arr_check_1(char* arr, int arr_size)
+int arr_check_symbol(char* arr, int arr_size)
 {
 	int i=0;
 	for (i = 0; i < arr_size; i++)
@@ -87,7 +87,7 @@ int arr_check_1(char* arr, int arr_size)
 	return arr_check_2(arr, arr_size);
 }
 
-int arr_check_2(char* arr, int arr_size)
+int arr_check_sin_cos(char* arr, int arr_size)
 {
 	int i = 0;
 	for (i = 0; i < arr_size; i++)
@@ -123,7 +123,7 @@ int arr_check_2(char* arr, int arr_size)
 	return arr_check_3(arr, arr_size);
 }
 
-int arr_check_3(char* arr, int arr_size)
+int arr_check_brackets(char* arr, int arr_size)
 {
 	int i = 0,j = 0, a=0;
 	int* arr_help;
@@ -164,7 +164,7 @@ int arr_check_3(char* arr, int arr_size)
 	arr_check_4(arr, arr_size);
 }
 
-int arr_check_4(char* arr, int arr_size)
+int arr_check_sentence(char* arr, int arr_size)
 {
 	int i = 0, j = 0, a = 0;
 	for (i = 0; i < arr_size; i++)
