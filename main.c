@@ -12,7 +12,6 @@ int main()
 	int i = 0, arr_size=0, j = 0;
 	char arr[40];
 	char answer[40];
-	int check = 0;
 	Stk* stack = NULL;
 	// количество символов в массиве
 	arr_size = input_size();
