@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "stk.h"
 #include "utl.h"
-#include "func.h"
+#include "reverse_polish_notation.h"
 
 // если попалось число
 int number_func(char* arr, char* answer, int* i, int* j)
@@ -163,7 +163,7 @@ int end_func(Stk* stack, char* answer, int* j)
 }
 
 // главная функция
-int func(Stk* stack, char* arr, int arr_size, char* answer)
+int reverse_polish_notation(Stk* stack, char* arr, int arr_size, char* answer)
 {
 	int* i, *j;
 	i = malloc(sizeof(int));
