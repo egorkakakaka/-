@@ -166,8 +166,6 @@ int end_func(Stk* stack, char* answer, int* j)
 int reverse_polish_notation(Stk* stack, char* arr, int arr_size, char* answer)
 {
 	int* i, * j;
-	i = malloc(sizeof(int));
-	j = malloc(sizeof(int));
 	*i = 0;
 	*j = 0;
 	while (*i < arr_size)
@@ -188,7 +186,5 @@ int reverse_polish_notation(Stk* stack, char* arr, int arr_size, char* answer)
 			exponent_func(stack, arr, arr_size, answer, i, j, 0);
 	}
 	end_func(stack, answer, j);
-	free(i);
-	free(j);
 	return *j;
 }
