@@ -54,35 +54,7 @@ int arr_check_symbol(char* arr, int arr_size)
 			return input_str(arr_size, arr);
 		}
 	}
-	for (i = 0; i < arr_size; i++)
-	{
-		if (arr[i] == 's')
-		{
-			if (((i + 2) < arr_size) && arr[i + 1] == 'i' && arr[i + 2] == 'n')
-			{
-				i += 2;
-			}
-			else
-			{
-				printf("Error symbol, try again\n");
-				return input_str(arr_size, arr);
-			}
-
-		}
-		if (arr[i] == 'c')
-		{
-			if (((i + 2) < arr_size) && arr[i + 1] == 'o' && arr[i + 2] == 's')
-			{
-				i += 2;
-			}
-			else
-			{
-				printf("Error symbol, try again\n");
-				return input_str(arr_size, arr);
-			}
-		}
-
-	}
+	
 	printf("All is ok\n");
 	return arr_check_sin_cos(arr, arr_size);
 }
